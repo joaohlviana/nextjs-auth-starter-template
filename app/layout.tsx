@@ -3,18 +3,22 @@ import type { Appearance } from "@clerk/types";
 import "./globals.css";
 import Script from "next/script";
 import localFont from "next/font/local";
-import { templateMetadata } from "./_template/content/metadata";
 
-export const metadata = templateMetadata;
+export const metadata = {
+  title: "Next.js Clerk Template",
+  description: "A simple and powerful Next.js template featuring authentication and user management powered by Clerk.",
+};
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
+  fallback: ["system-ui", "arial"],
 });
 
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+  fallback: ["Courier New", "monospace"],
 });
 
 /**

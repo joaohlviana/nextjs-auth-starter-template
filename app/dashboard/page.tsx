@@ -1,78 +1,62 @@
-import { UserDetails } from "../components/user-details";
 import { UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { CodeSwitcher } from "../components/code-switcher";
-import { LearnMore } from "../_template/components/learn-more";
-import { Footer } from "../_template/components/footer";
-import { ClerkLogo } from "../_template/components/clerk-logo";
-import { NextLogo } from "../_template/components/next-logo";
-import Link from "next/link";
-
-import { DASHBOARD_CARDS } from "../_template/content/cards";
-import { DeployButton } from "../_template/components/deploy-button";
 
 export default async function DashboardPage() {
-  const user = await currentUser();
+  const { userId } = await auth();
   
-  if (!user) {
+  if (!userId) {
     redirect("/sign-in");
   }
 
   return (
-    <>
-      <main className="max-w-300 w-full mx-auto">
-        <div className="grid grid-cols-[1fr_20.5rem] gap-10 pb-10">
-          <div>
-            <header className="flex items-center justify-between w-full h-16 gap-4">
-              <div className="flex gap-4">
-                <div className="bg-[#F4F4F5] px-4 py-3 rounded-full inline-flex gap-4">
-                  <ClerkLogo />
-                  <div aria-hidden className="w-px h-6 bg-[#C7C7C8]" />
-                  <NextLogo />
-                </div>
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 font-medium text-[0.8125rem] rounded-full px-3 py-2 hover:bg-gray-100"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                  Back to Home
-                </Link>
-              </div>
-              <div className="flex items-center gap-2">
-                <UserButton
-                  appearance={{
-                    elements: {
-                      userButtonAvatarBox: "size-8",
-                    },
-                  }}
-                />
-              </div>
-            </header>
-            <UserDetails />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto py-8 px-4">
+        <div className="bg-white rounded-lg shadow-md p-8">
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <UserButton />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center justify-center h-16 w-full">
-              <DeployButton className="h-8" />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-blue-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                Welcome!
+              </h3>
+              <p className="text-blue-700">
+                You are successfully authenticated with Clerk.
+              </p>
             </div>
-            <CodeSwitcher />
+            
+            <div className="bg-green-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-green-900 mb-2">
+                Protected Route
+              </h3>
+              <p className="text-green-700">
+                This page is only accessible to authenticated users.
+              </p>
+            </div>
+            
+            <div className="bg-purple-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-purple-900 mb-2">
+                User Management
+              </h3>
+              <p className="text-purple-700">
+                Manage your profile using the user button above.
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-8">
+            <a
+              href="/"
+              className="inline-flex items-center text-blue-600 hover:text-blue-800"
+            >
+              ← Back to Home
+            </a>
           </div>
         </div>
-      </main>
-      <LearnMore cards={DASHBOARD_CARDS} />
-      <Footer />
-    </>
+      </div>
+    </div>
   );
 }
