@@ -1,6 +1,7 @@
 import { UserDetails } from "../components/user-details";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { CodeSwitcher } from "../components/code-switcher";
 import { LearnMore } from "../_template/components/learn-more";
 import { Footer } from "../_template/components/footer";
@@ -12,7 +13,11 @@ import { DASHBOARD_CARDS } from "../_template/content/cards";
 import { DeployButton } from "../_template/components/deploy-button";
 
 export default async function DashboardPage() {
-  await auth.protect();
+  const user = await currentUser();
+  
+  if (!user) {
+    redirect("/sign-in");
+  }
 
   return (
     <>
