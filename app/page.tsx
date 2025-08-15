@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { currentUser } from "@clerk/nextjs/server";
 import { LandingHero } from "./_template/components/landing-hero";
 import { LearnMore } from "./_template/components/learn-more";
