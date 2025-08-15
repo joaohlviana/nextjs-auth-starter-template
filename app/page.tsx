@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { LandingHero } from "./_template/components/landing-hero";
 import { LearnMore } from "./_template/components/learn-more";
 import { Footer } from "./_template/components/footer";
