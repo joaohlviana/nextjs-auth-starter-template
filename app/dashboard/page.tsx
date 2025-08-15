@@ -12,6 +12,8 @@ import Link from "next/link";
 import { DASHBOARD_CARDS } from "../_template/content/cards";
 import { DeployButton } from "../_template/components/deploy-button";
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const user = await currentUser();
   
